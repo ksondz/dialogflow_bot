@@ -12,7 +12,7 @@ restService.use(
 restService.use(bodyParser.json());
 
 restService.post("/echo", function(req, res) {
-    var text =
+    const text =
         req.body.queryResult &&
         req.body.queryResult.parameters &&
         req.body.queryResult.parameters.echoText
@@ -20,6 +20,7 @@ restService.post("/echo", function(req, res) {
             : "Seems like some problem. Speak again.";
     return res.json({
         text,
+        text1: req.body,
         displayText: text,
         source: "webhook-echo-sample"
     });
