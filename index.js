@@ -1,31 +1,33 @@
-const express = require("express");
-const bodyParser = require("body-parser");
 
-const restService = express();
+const Koa = require('koa');
+const router = require('koa-router')();
+const koaBody = require('koa-body');
 
-restService.use(
-    bodyParser.urlencoded({
-        extended: true
-    })
-);
+const app = new Koa();
 
-restService.use(bodyParser.json());
+app.use(koaBody());
 
-restService.post("/echo", function(req, res) {
+router.get('/', async ctx => {
+    ctx.body = 'My koa API';
+});
 
-    const text =
-        req.body.queryResult &&
-        req.body.queryResult.parameters &&
-        req.body.queryResult.parameters.echoText
-            ? req.body.queryResult.parameters.echoText
-            : "Seems like some problem. Speak again.";
+router.post('/echo', async ctx => {
+    const { queryResult } = ctx.request.body;
 
-    return res.json({
+    let text = "Seems like some problem. Speak again.";
+
+    if (queryResult && queryResult.parameters && queryResult.parameters.echoText) {
+        text = queryResult.parameters.echoText;
+    }
+
+    ctx.body = {
         fulfillmentText: text,
         source: "webhook-echo-sample",
-    });
+    };
 });
 
-restService.listen(process.env.PORT || 8000, function() {
-    console.log("Server up and listening");
-});
+app.use(router.routes());
+
+app.listen(8000);
+
+console.log("Server up and listening");

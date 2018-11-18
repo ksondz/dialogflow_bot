@@ -2,13 +2,15 @@
   "name": "webhook-bot",
   "version": "1.0.0",
   "description": "Webhook bot",
-  "main": "index.js",
+  "main": "index2.js",
   "scripts": {
     "start": "node index.js"
   },
-  "author": "Sunil Syal",
+  "author": "Kostiantyn Ksondz",
   "dependencies": {
-    "body-parser": "^1.15.0",
-    "express": "^4.13.4"
+    "dialogflow": "^0.7.0",
+    "koa": "^2.6.2",
+    "koa-body": "^4.0.4",
+    "koa-router": "^7.4.0"
   }
 }
