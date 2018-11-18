@@ -12,22 +12,22 @@ restService.use(
 restService.use(bodyParser.json());
 
 restService.post("/echo", function(req, res) {
-    var speech =
-        req.body.result &&
-        req.body.result.parameters &&
-        req.body.result.parameters.echoText
-            ? req.body.result.parameters.echoText
+    var text =
+        req.body.queryResult &&
+        req.body.queryResult.parameters &&
+        req.body.queryResult.parameters.echoText
+            ? req.body.queryResult.parameters.echoText
             : "Seems like some problem. Speak again.";
     return res.json({
-        speech: speech,
-        displayText: speech,
+        text,
+        displayText: text,
         source: "webhook-echo-sample"
     });
 });
 
 restService.post("/audio", function(req, res) {
     var speech = "";
-    switch (req.body.result.parameters.AudioSample.toLowerCase()) {
+    switch (req.body.queryResult.parameters.AudioSample.toLowerCase()) {
         //Speech Synthesis Markup Language
         case "music one":
             speech =
@@ -112,15 +112,15 @@ restService.post("/audio", function(req, res) {
             break;
     }
     return res.json({
-        speech: speech,
-        displayText: speech,
+        text: speech,
+        displayText: text,
         source: "webhook-echo-sample"
     });
 });
 
 restService.post("/video", function(req, res) {
     return res.json({
-        speech:
+        text:
             '<speak>  <audio src="https://www.youtube.com/watch?v=VX7SSnvpj-8">did not get your MP3 audio file</audio></speak>',
         displayText:
             '<speak>  <audio src="https://www.youtube.com/watch?v=VX7SSnvpj-8">did not get your MP3 audio file</audio></speak>',
@@ -184,7 +184,7 @@ restService.post("/slack-test", function(req, res) {
         ]
     };
     return res.json({
-        speech: "speech",
+        text: "speech",
         displayText: "speech",
         source: "webhook-echo-sample",
         data: {
